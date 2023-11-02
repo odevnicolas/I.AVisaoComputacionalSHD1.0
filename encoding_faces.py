@@ -61,4 +61,4 @@ with open(pickle_filename, "wb") as f:
   pickle.dump(encodings_data, f)
 
 print('\n')
-print('Faces encoded successfully!')
+print('Faces encoded com sucesso!')
