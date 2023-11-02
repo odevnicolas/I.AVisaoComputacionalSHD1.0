@@ -16,7 +16,7 @@ data_encoding = pickle.loads(open(pickle_name, "rb").read())
 list_encodings = data_encoding["encodings"]
 list_names = data_encoding["names"]
 
-def recognize_faces(image, list_encodings, list_names, resizing=0.25, tolerance=0.8):
+def recognize_faces(image, list_encodings, list_names, resizing=0.25, tolerance=0.5):
   image = cv2.resize(image, (0, 0), fx=resizing, fy=resizing)
 
   img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
