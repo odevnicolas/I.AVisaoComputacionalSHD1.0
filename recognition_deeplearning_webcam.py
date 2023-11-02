@@ -35,6 +35,7 @@ def recognize_faces(image, list_encodings, list_names, resizing=0.25, tolerance=
     if matches[best_match_index]:
       name = list_names[best_match_index] 
     face_names.append(name) 
+    conf_values.append(face_distances[best_match_index])
 
   face_locations = np.array(face_locations)
   face_locations = face_locations / resizing
@@ -42,27 +43,23 @@ def recognize_faces(image, list_encodings, list_names, resizing=0.25, tolerance=
 
 def show_recognition(frame, face_locations, face_names, conf_values):
 
-def show_recognition(frame, face_locations, face_names, conf_values):
-    for face_loc, name, conf in zip(face_locations, face_names, conf_values):
-        y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
+for face_loc, name, conf in zip(face_locations, face_names, conf_values):
+    y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
 
-        if name == "Não identificado":
-            rect_color = (0, 0, 255)  
-        else:
-            # Verifique se passaram 3 segundos desde a última identificação
-            if time.time() - last_identified_time < identification_timeout:
-                rect_color = (0, 128, 0)  # Verde escuro
-            else:
-                rect_color = (0, 255, 0)  # Verde
+    if name == "Não identificado":
+        rect_color = (0, 0, 255)  
+    else:
+        rect_color = (0, 255, 0)  
 
-        cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 0.7, (20, 255, 0), 2, lineType=cv2.LINE_AA)
-        cv2.rectangle(frame, (x1, y1), (x2, y2), rect_color, 4)
+    cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 0.7, (20, 255, 0), 2, lineType=cv2.LINE_AA)
+    cv2.rectangle(frame, (x1, y1), (x2, y2), rect_color, 4)
 
-        if name != "Não identificado":
-            conf = "{:.8f}".format(conf)
-            cv2.putText(frame, conf, (x1, y2 + 15), cv2.FONT_HERSHEY_DUPLEX, 0.5, (20, 255, 0), 1, lineType=cv2.LINE_AA)
+    if name != "Não identificado":
+        conf = "{:.8f}".format(conf)
+        cv2.putText(frame, conf, (x1, y2 + 15), cv2.FONT_HERSHEY_DUPLEX, 0.5, (20, 255, 0), 1, lineType=cv2.LINE_AA)
 
-    return frame
+
+  return frame
 
  
 cam = cv2.VideoCapture(0)
